@@ -73,6 +73,7 @@ router.get('/favorites/add', (req, res, next) => {
         { $push: {favorites: "89" } }
       )
   })
+  res.send('added')
 })
 
 
