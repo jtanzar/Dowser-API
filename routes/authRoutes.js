@@ -7,7 +7,7 @@ app.get('/auth/google', passport.authenticate('google', {
   scope: ['profile', 'email']
 }), (req, res) => {
   // console.log('res', res.cookies)
-  // console.log('req', req.headers)
+  console.log('req', req.headers)
   res.send(req.user)
 })
 
