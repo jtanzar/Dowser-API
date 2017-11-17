@@ -45,6 +45,7 @@ const findDocuments = function(db, callback) {
 
 router.get('/', (req, res, next) => {
   MongoClient.connect(keys.mongoURI, (err, db) => {
+    if (err) throw err
     db.collection('users')
       .find({ googleID: req.user.googleID })
       .toArray((err, docs) => {
@@ -59,6 +60,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/favorites', (req, res, next) => {
   MongoClient.connect(keys.mongoURI, (err, db) => {
+    if (err) throw err
     db.collection('users')
       .find({ googleID: req.user.googleID })
       .project({ favorites: 1 })
@@ -75,6 +77,7 @@ router.get('/favorites', (req, res, next) => {
 
 router.get('/favorites/add', (req, res, next) => {
   MongoClient.connect(keys.mongoURI, (err, db) => {
+    if (err) throw err
     db.collection('users')
       .update(
         { googleID: req.user.googleID },
