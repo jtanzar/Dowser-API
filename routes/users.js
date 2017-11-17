@@ -44,18 +44,21 @@ const findDocuments = function(db, callback) {
 // }
 
 router.get('/', (req, res, next) => {
-  MongoClient.connect(keys.mongoURI, (err, db) => {
-    if (err) throw err
-    db.collection('users')
-      .find({ googleID: req.user.googleID })
-      .toArray((err, docs) => {
-        if (docs) {
-          res.send(docs[0])
-        } else {
-          res.send('please log in')
-        }
-      })
-  })
+  if (req.user) {
+    MongoClient.connect(keys.mongoURI, (err, db) => {
+      db.collection('users')
+        .find({ googleID: req.user.googleID })
+        .toArray((err, docs) => {
+          if (docs) {
+            res.send(docs[0])
+          } else {
+            res.send('please log in')
+          }
+        })
+    })
+  } else {
+    res.send('please log in')
+  }
 })
 
 router.get('/favorites', (req, res, next) => {
