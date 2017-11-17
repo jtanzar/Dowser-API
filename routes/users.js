@@ -52,7 +52,7 @@ router.get('/', (req, res, next) => {
           if (docs) {
             res.send(docs[0])
           } else {
-            res.send('please log in')
+            res.send('no user or not logged in')
           }
         })
     })
@@ -62,38 +62,45 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/favorites', (req, res, next) => {
-  MongoClient.connect(keys.mongoURI, (err, db) => {
-    if (err) throw err
-    db.collection('users')
-      .find({ googleID: req.user.googleID })
-      .project({ favorites: 1 })
-      .toArray((err, docs) => {
-        if (docs) {
-          res.send(docs[0].favorites)
-        } else {
-          res.send('please log in')
-        }
-      })
-  })
+  if (req.user) {
+    MongoClient.connect(keys.mongoURI, (err, db) => {
+      db.collection('users')
+        .find({ googleID: req.user.googleID })
+        .project({ favorites: 1 })
+        .toArray((err, docs) => {
+          if (docs) {
+            res.send(docs[0].favorites)
+          } else {
+            res.send('favorites error')
+          }
+        })
+    })
+  } else {
+    res.send('please log in')
+  }
 })
 
 
 router.get('/favorites/add', (req, res, next) => {
-  MongoClient.connect(keys.mongoURI, (err, db) => {
-    if (err) throw err
-    db.collection('users')
-      .update(
-        { googleID: req.user.googleID },
-        { $push: {favorites: "89" } }
-      )
-      .toArray((err, docs) => {
-        if (docs) {
-          res.send(docs[0].favorites[favorites.length - 1])
-        } else {
-          res.send('please log in')
-        }
-      })
-  })
+  if (req.user) {
+    MongoClient.connect(keys.mongoURI, (err, db) => {
+      if (err) throw err
+      db.collection('users')
+        .update(
+          { googleID: req.user.googleID },
+          { $push: {favorites: "89" } }
+        )
+        .toArray((err, docs) => {
+          if (docs) {
+            res.send(docs[0].favorites[favorites.length - 1])
+          } else {
+            res.send('update error')
+          }
+        })
+    })
+  } else {
+    res.send('please log in')
+  }
 })
 
 
