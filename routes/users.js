@@ -70,10 +70,7 @@ router.get('/favorites/add', (req, res, next) => {
     db.collection('users')
       .updateOne(
         { googleID: req.user.googleID },
-        { $push: {favorites: 'more'} },
-        (error, result) => {
-          res.send(result)
-        }
+        { $push: {favorites: 'more'} }
       )
   })
 })
