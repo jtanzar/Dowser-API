@@ -6,13 +6,13 @@ module.exports = (app) => {
 app.get('/auth/google', passport.authenticate('google', {
   scope: ['profile', 'email']
 }), (req, res) => {
-  console.log('res', res.cookies)
-  console.log('req', req.cookies)
+  // console.log('res', res.cookies)
+  // console.log('req', req.cookies)
   res.send(req.user)
 })
 
 app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-  console.log('res', res.cookies)
+  console.log('res', res)
   // console.log('req', req.cookies)
   res.send(req.user)
 })
