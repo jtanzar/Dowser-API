@@ -12,8 +12,8 @@ app.get('/auth/google', passport.authenticate('google', {
 })
 
 app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-  console.log('res', res.headers)
-  // console.log('req', req.cookies)
+  // console.log('res', res.headers)
+  console.log('req', req.headers)
   res.send(req.user)
 })
 
