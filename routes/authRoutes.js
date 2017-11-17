@@ -7,13 +7,13 @@ app.get('/auth/google', passport.authenticate('google', {
   scope: ['profile', 'email']
 }), (req, res) => {
   // console.log('res', res.cookies)
-  console.log('req', req.headers)
+  // console.log('req', req.headers)
   res.send(req.user)
 })
 
 app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
   // console.log('res', res.headers)
-  // console.log('req', req.headers.cookie)
+  console.log('req', req.headers.cookie)
   res.send(req.user)
 })
 
