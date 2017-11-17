@@ -12,7 +12,7 @@ app.get('/auth/google', passport.authenticate('google', {
 })
 
 app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-  console.log('res', res)
+  console.log('res', res.headers)
   // console.log('req', req.cookies)
   res.send(req.user)
 })
