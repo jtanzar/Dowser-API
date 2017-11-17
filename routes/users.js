@@ -65,12 +65,12 @@ router.get('/favorites', (req, res, next) => {
 })
 
 
-router.post('/favorites/add', (req, res, next) => {
+router.get('/favorites/add', (req, res, next) => {
   MongoClient.connect(keys.mongoURI, (err, db) => {
     db.collection('users')
       .updateOne(
         { googleID: req.user.googleID },
-        { $set: {favorites: req.body.favorite} },
+        { $push: {favorites: 'more'} },
         (error, result) => {
           res.send(result)
         }
