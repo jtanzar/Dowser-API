@@ -48,7 +48,11 @@ router.get('/', (req, res, next) => {
     db.collection('users')
       .find({ googleID: req.user.googleID })
       .toArray((err, docs) => {
-        res.send(docs[0])
+        if (docs) {
+          res.send(docs[0])
+        } else {
+          res.send('please log in')
+        }
       })
   })
 })
@@ -59,7 +63,11 @@ router.get('/favorites', (req, res, next) => {
       .find({ googleID: req.user.googleID })
       .project({ favorites: 1 })
       .toArray((err, docs) => {
-        res.send(docs[0].favorites)
+        if (docs) {
+          res.send(docs[0].favorites)
+        } else {
+          res.send('please log in')
+        }
       })
   })
 })
@@ -72,8 +80,14 @@ router.get('/favorites/add', (req, res, next) => {
         { googleID: req.user.googleID },
         { $push: {favorites: "89" } }
       )
+      .toArray((err, docs) => {
+        if (docs) {
+          res.send(docs[0].favorites[favorites.length - 1])
+        } else {
+          res.send('please log in')
+        }
+      })
   })
-  res.send('added')
 })
 
 
