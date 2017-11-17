@@ -70,7 +70,7 @@ router.get('/favorites/add', (req, res, next) => {
     db.collection('users')
       .update(
         { googleID: req.user.googleID },
-        { $set: {favorites: [] } }
+        { $push: {favorites: "89" } }
       )
   })
 })
