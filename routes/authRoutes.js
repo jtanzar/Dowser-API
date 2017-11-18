@@ -4,17 +4,15 @@ const passport = require('passport')
 module.exports = (app) => {
 
 app.get('/auth/google', passport.authenticate('google', {
-  scope: ['profile', 'email']
-}), (req, res) => {
-  console.log('res 1', res.headers)
-  console.log('req 1', req.headers)
-  res.send(req.user)
-})
+  scope: ['profile']
+  })
+)
 
 app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-  console.log('res 2', res.headers)
-  console.log('req 2', req.headers)
-  res.send(req.user)
+  // console.log('res 2', res.headers)
+  // console.log('req 2', req.headers)
+  // res.send(req.user)
+  res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))
 })
 
 app.get('/auth/logout', (req, res) => {
