@@ -9,7 +9,7 @@ const keys = require('./config/keys')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 
-const users = require('./routes/users')
+const favorites = require('./routes/favorites')
 
 require('./models/User')
 require('./services/passport')
@@ -27,7 +27,7 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-require('./routes/authRoutes')(app)
+require('./routes/auth')(app)
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/users', users)
+app.use('/favorites', favorites)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
