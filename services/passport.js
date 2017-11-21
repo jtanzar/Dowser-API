@@ -24,6 +24,7 @@ passport.use(
   },
     async (accessToken, refreshToken, profile, done) => {
       console.log(profile)
+      console.log(accessToken)
       const existingUser =  await User.findOne({ googleID: profile.id })
           if (existingUser) {
             done(null, existingUser)
@@ -36,6 +37,8 @@ passport.use(
               photo: profile.photos[0].value,
               favorites: []
             }).save()
+
+            done(null, user)
           }
     }
   )
