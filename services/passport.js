@@ -23,9 +23,9 @@ passport.use(
     callbackURL: 'https://dowser-api.herokuapp.com/auth/google/callback'
   },
     async (accessToken, refreshToken, profile, done) => {
-      console.log('GOOGLE PROFILE', profile)
-      console.log('access token', accessToken)
-      console.log('refreshToken', refreshToken)
+      // console.log('GOOGLE PROFILE', profile)
+      // console.log('access token', accessToken)
+      // console.log('refreshToken', refreshToken)
       const existingUser =  await User.findOne({ googleID: profile.id })
           if (existingUser) {
             done(null, existingUser)
