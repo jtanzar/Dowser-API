@@ -81,14 +81,14 @@ router.get('/favorites', (req, res, next) => {
 })
 
 
-router.get('/favorites/add', (req, res, next) => {
+router.post('/favorites/add', (req, res, next) => {
   if (req.user) {
     MongoClient.connect(keys.mongoURI, (err, db) => {
       if (err) throw err
       db.collection('users')
         .update(
           { googleID: req.user.googleID },
-          { $push: {favorites: "89" } }
+          { $push: {favorites: req.body.favorite } }
         )
         .toArray((err, docs) => {
           if (docs) {
