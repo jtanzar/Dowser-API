@@ -89,7 +89,7 @@ router.post('/favorites/add/:id', (req, res, next) => {
           { googleID: req.params.id },
           { $push: {favorites: req.body } }
         )
-        .toArray((err, docs) => {
+        .then((err, docs) => {
           if (docs) {
             res.send(docs[0].favorites[favorites.length - 1])
           } else {
