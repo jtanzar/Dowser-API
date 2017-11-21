@@ -13,7 +13,7 @@ app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => 
   // console.log('res 2', res.headers)
   // console.log('req 2', req.headers)
   // res.send(req.user)
-  res.redirect('OAuthLogin://login?user=' + JSON.stringify(req.user))
+  res.redirect('Dowser://login?user=' + JSON.stringify(req.user))
 })
 
 app.get('/auth/logout', (req, res) => {
