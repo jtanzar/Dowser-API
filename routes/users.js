@@ -62,7 +62,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/favorites', (req, res, next) => {
-  if (req.user) {
+
     MongoClient.connect(keys.mongoURI, (err, db) => {
       db.collection('users')
         .find({ googleID: req.user.googleID })
@@ -75,22 +75,19 @@ router.get('/favorites', (req, res, next) => {
           }
         })
     })
-  } else {
-    res.send('please log in')
-  }
-})
+  })
 
 
-router.post('/favorites/add', (req, res, next) => {
+router.post('/favorites/add/:id', (req, res, next) => {
   console.log('request to post favorite req.body', req.body)
   console.log('request to post favorite req.user', req.user)
-  if (req.user) {
+
     MongoClient.connect(keys.mongoURI, (err, db) => {
       if (err) throw err
       db.collection('users')
         .update(
-          { googleID: req.user.googleID },
-          { $push: {favorites: req.body.favorite } }
+          { googleID: req.params.id },
+          { $push: {favorites: req.body } }
         )
         .toArray((err, docs) => {
           if (docs) {
@@ -100,10 +97,7 @@ router.post('/favorites/add', (req, res, next) => {
           }
         })
     })
-  } else {
-    res.send('please log in')
-  }
-})
+  })
 
 
 
