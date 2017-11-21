@@ -82,6 +82,7 @@ router.get('/favorites', (req, res, next) => {
 
 
 router.post('/favorites/add', (req, res, next) => {
+  console.log('request to post favorite', req)
   if (req.user) {
     MongoClient.connect(keys.mongoURI, (err, db) => {
       if (err) throw err
