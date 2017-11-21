@@ -5,7 +5,7 @@ module.exports = (app) => {
 
 app.get('/auth/google', passport.authenticate('google', {
   scope: ['profile']
-}), (req, res) = > {
+}), (req, res) => {
   res.send(req.user)
 })
 
