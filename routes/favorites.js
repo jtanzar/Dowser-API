@@ -51,10 +51,11 @@ router.delete('/delete/:id', (req, res, next) => {
       db.collection('users')
         .update(
           { googleID: req.params.id },
-          { $pull: { "favorites" : { "venueId" : req.body.venueId } } },
+          { $pull: { "favorites" : { "favorites.venueId" : req.body.venueId } } },
           // { $pull: { "favorites" : { "venueId" : req.body.venueId } } },
           // { $pull: { "favorites" : { "name" : req.body.name } } },
         )
+
       db.collection('users')
         .find({ googleID: req.params.id })
         .project({ favorites: 1 })
