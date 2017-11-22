@@ -44,6 +44,27 @@ router.post('/add/:id', (req, res, next) => {
 })
 
 
+router.delete('/delete/:id', (req, res, next) => {
+
+    MongoClient.connect(keys.mongoURI, (err, db) => {
+
+      db.collection('users')
+        .update(
+          { googleID: req.params.id },
+          { $pull: { "favorites" : { "venueId" : req.body.venueId } } },
+          // { $pull: { "favorites" : { "venueId" : req.body.venueId } } },
+          // { $pull: { "favorites" : { "name" : req.body.name } } },
+        )
+      db.collection('users')
+        .find({ googleID: req.params.id })
+        .project({ favorites: 1 })
+        .toArray((err, docs) => {
+          res.send(docs[0].favorites)
+        })
+     })
+})
+
+
 
 
 
